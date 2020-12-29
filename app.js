@@ -5,12 +5,17 @@ const port = 3000
 
 app.use((req, res, next) => {
   const reqDate = new Date()
-  const output = `${reqDate.toLocaleString('zh-TW')} | ${req.method} from ${req.originalUrl}`
-  console.log(output)
+  const year = reqDate.getFullYear()
+  const month = reqDate.getMonth() + 1 // 0-11 
+  const day = reqDate.getDate()
+  const hour = reqDate.getHours()
+  const min = reqDate.getMinutes()
+  const sec = reqDate.getSeconds()
+
   res.on('finish', () => {
     const resDate = new Date()
-    const duration = resDate - reqDate
-    console.log(output + ` | total time: ${duration}ms`)
+    const elapsed = resDate - reqDate
+    console.log(`${year}-${month}-${day} ${hour}:${min}:${sec} | ${req.method} from ${req.originalUrl} | total time: ${elapsed}ms`)
   })
   next()
 })
